@@ -1,5 +1,5 @@
 package prosjektOppgaven;
 
-public class MyUtilityClass {
+public final class MyUtilityClass {
 
 }
