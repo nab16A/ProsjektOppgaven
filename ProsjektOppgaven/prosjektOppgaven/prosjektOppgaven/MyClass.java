@@ -1,9 +1,11 @@
 package prosjektOppgaven;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 
 public final class MyClass {
@@ -23,14 +25,57 @@ public final class MyClass {
 
 	}
 	
+	public static String konvertIntTilHex(int x) {
+		String s = "";
+		int y = 0;
+		
+		String[] strArr = String.valueOf(x).split("");
+		int n = strArr.length;
+		
+		if ((Math.pow(16, (n - 1)) > (double)x)) 
+			y = n - 2;
+		y = n - 1;
+		
+		ArrayList<Integer> tallList = new ArrayList<>();
+		int d = (int) (x / ((int)Math.pow(16, y)));
+		int sub = x - (d * ((int)Math.pow(16, y)));
+		tallList.add(d);
+		
+		while(sub != 0) {
+			x = sub;
+			y = y - 1;
+			d = (int) (sub / ((int)Math.pow(16, y)));
+			sub = sub - (d * ((int)Math.pow(16, y)));
+			tallList.add(d);
+		}
+		ArrayList<String> strList = new ArrayList<>(); 
+		for (int i = 0; i < tallList.size(); i++) {
+			if (tallList.get(i).compareTo(9) == -1 || tallList.get(i).compareTo(9) == 0) 
+				strList.add(String.valueOf(tallList.get(i)));
+			for (Entry<Character, Integer> entry : myMap.entrySet()) {
+				if (entry.getValue().equals(tallList.get(i))) 
+					strList.add(Character.toString(entry.getKey()));
+			}
+		}
+		for (String string : strList) {
+			s = s + string;
+		}
+		return s;
+	}
+	
 	public static int konverterHexTilInt(String string) {
 		int y = 0;
 		if(sjekkHexStringen(string)) 
 			y = beregnHexStringen(string);
 		return y;
-		
 	}
-
+	
+	public static boolean sjekkHexStringen(String str) {
+		if(str.length() == 6 && str.matches(".*[a-f].*") && str.matches(".*[0-9].*")) 
+			return true;
+		return false;
+	}
+	
 	private static int beregnHexStringen(String s) {
 		int sum = 0;
 		List<Integer> intList = new ArrayList<>();
@@ -50,17 +95,10 @@ public final class MyClass {
 				((int)(Math.pow(16, 1)))) + (intList.get(5) * ((int)(Math.pow(16, 0))));
 		return sum;
 	}
-
-	public static boolean sjekkHexStringen(String str) {
-		if(str.length() == 6 && str.matches(".*[a-f].*") && str.matches(".*[0-9].*")) 
-			return true;
-		return false;
-	}
-
+    
 	public static int isHexadecimal(String s) {
 		if (s == "a")
 			return 10;
 		return -1;
 	}
-
 }

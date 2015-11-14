@@ -38,6 +38,7 @@ public class MyClassTest {
 		assertTrue(MyClass.sjekkHexStringen("a"));
 	}
 	
+	//@Ignore
 	@Test
 	public void konverterHexTilInt_0D510f_ShouldBe872719() {
 		
@@ -47,6 +48,18 @@ public class MyClassTest {
 		Mockito.when(MyClass.konverterHexTilInt("?")).thenReturn(00);
 
 		assertThat(MyClass.konverterHexTilInt("?"), equalTo(00));
+	}
+	
+	//@Ignore
+	@Test
+	public void konvertIntTilHex_32993_ShouldBe80e1() {
+		
+		assertThat(MyClass.konvertIntTilHex(32993), is("080e1"));
+				
+		PowerMockito.mockStatic(MyClass.class);
+		Mockito.when(MyClass.konvertIntTilHex(221)).thenReturn("x");
+
+		assertThat(MyClass.konvertIntTilHex(221), equalTo("x"));
 	}
 
 }
