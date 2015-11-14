@@ -25,6 +25,21 @@ public final class MyClass {
 
 	}
 	
+	public static int konvertBitStrengTilInt(String string) {
+		if (string.length() < 24) {
+			System.out.println("Bit stringen må ha 24 tegn");
+		} else if (string.length() > 24) {
+			throw new IllegalArgumentException("Bit stringen må ha max 24 tegn");
+		} else if (string == "") {
+			return 0;
+		} else if (!string.matches("[0-1]+")) {
+			throw new IllegalArgumentException("Bit stringen må ha bare 0 eller 1 som tegn");
+		} else {
+			return 100;
+		}
+		return 0;
+	}
+	
 	public static String konvertIntTilHex(int x) {
 		String s = "";
 		int y = 0;
@@ -63,7 +78,7 @@ public final class MyClass {
 		return s;
 	}
 	
-	public static int konverterHexTilInt(String string) {
+	public static int konverterHexStrengTilInt(String string) {
 		int y = 0;
 		if(sjekkHexStringen(string)) 
 			y = beregnHexStringen(string);
