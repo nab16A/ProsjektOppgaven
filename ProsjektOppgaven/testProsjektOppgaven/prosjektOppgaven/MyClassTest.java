@@ -1,83 +1,111 @@
 package prosjektOppgaven;
 
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(MyClass.class)
 public class MyClassTest {
-	
-	@Ignore
+
+	//@Ignore
 	@Test
 	public void isHexadecimal_Ten_ShouldBe10() {
 		assertEquals(MyClass.isHexadecimal("a"), 10);
-				
+
 		PowerMockito.mockStatic(MyClass.class);
 		Mockito.when(MyClass.isHexadecimal("a")).thenReturn(-1);
 		assertEquals(MyClass.isHexadecimal("a"), -1);
 	}
-	
-	@Ignore
+
+	//@Ignore
 	@Test
-	public void sjekkHexStringen_03ac0f_ShouldBeTrue() {
-		assertTrue(MyClass.sjekkHexStringen("03ac0f"));
-				
+	public void konverterHexStrengTilInt_HexString03ac0f_ShouldBe240655() {
+		assertThat(MyClass.konverterHexStrengTilInt("03ac0f"), is(240655));
+
 		PowerMockito.mockStatic(MyClass.class);
-		Mockito.when(MyClass.sjekkHexStringen("a")).thenReturn(true);
-		assertTrue(MyClass.sjekkHexStringen("a"));
+		Mockito.when(MyClass.konverterHexStrengTilInt("a")).thenReturn(12);
+		assertThat(MyClass.konverterHexStrengTilInt("a"), equalTo(12));
 	}
-	
-	@Ignore
+
+	//@Ignore
 	@Test
-	public void konverterHexTilInt_0D510f_ShouldBe872719() {
-		assertThat(MyClass.konverterHexStrengTilInt("0D510f"), is(872719));
-				
+	public void konverterHexStrengTilInt_EmptyString_ShouldBe0() {
+		assertThat(MyClass.konverterHexStrengTilInt(""), is(0));
+
 		PowerMockito.mockStatic(MyClass.class);
-		Mockito.when(MyClass.konverterHexStrengTilInt("?")).thenReturn(00);
-		assertThat(MyClass.konverterHexStrengTilInt("?"), equalTo(00));
+		Mockito.when(MyClass.konverterHexStrengTilInt("?")).thenReturn(-1);
+		assertThat(MyClass.konverterHexStrengTilInt("?"), equalTo(-1));
 	}
-	
-	@Ignore
+
+	//@Ignore
+	@Test(expected = IllegalArgumentException.class)
+	public void konverterHexStrengTilInt_HexStringWithJustLetters_ShouldThrowAnException() {
+		MyClass.konverterHexStrengTilInt("aaaaaa");
+	}
+
+	//@Ignore
+	@Test(expected = IllegalArgumentException.class)
+	public void konverterHexStrengTilInt_HexStringWithJustNumbers_ShouldThrowAnException() {
+		MyClass.konverterHexStrengTilInt("123456");
+	}
+
+	//@Ignore
+	@Test(expected = IllegalArgumentException.class)
+	public void konverterHexStrengTilInt_HexStringGreatherThanSixCharactersOrLessThanSix_ShouldThrowAnException() {
+		MyClass.konverterHexStrengTilInt("03a5d1e");
+		MyClass.konverterHexStrengTilInt("03a5d");
+	}
+
+	//@Ignore
 	@Test
-	public void konvertIntTilHex_32993_ShouldBe80e1() {
-		assertThat(MyClass.konvertIntTilHex(32993), is("080e1"));
-				
+	public void konvertIntTilHexStreng_32993_ShouldBe80E1() {
+		assertThat(MyClass.konvertIntTilHexStreng(32993), is("80E1"));
+
 		PowerMockito.mockStatic(MyClass.class);
-		Mockito.when(MyClass.konvertIntTilHex(221)).thenReturn("x");
-		assertThat(MyClass.konvertIntTilHex(221), equalTo("x"));
+		Mockito.when(MyClass.konvertIntTilHexStreng(32993)).thenReturn("x");
+		assertThat(MyClass.konvertIntTilHexStreng(32993), equalTo("x"));
 	}
-	
-	@Ignore
+
+	//@Ignore
 	@Test
 	public void konvertBitStrengTilInt_empty_ShouldBe0() {
 		assertThat(MyClass.konvertBitStrengTilInt(""), is(0));
-				
+
 		PowerMockito.mockStatic(MyClass.class);
-		Mockito.when(MyClass.konvertBitStrengTilInt("a")).thenReturn(12);
-		assertThat(MyClass.konvertBitStrengTilInt("a"), equalTo(12));
+		Mockito.when(MyClass.konvertBitStrengTilInt("0")).thenReturn(12);
+		assertThat(MyClass.konvertBitStrengTilInt("0"), equalTo(12));
 	}
-	
-	@Rule
-	public ExpectedException exception = ExpectedException.none();
+
+	//@Ignore
 	@Test
-	public void konvertBitStrengTilInt_StringWithOtherSignsThan0Or1_ShouldBeThrowAnException() {
-		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("Bit stringen må ha bare 0 eller 1 som tegn");
-		MyClass.konvertBitStrengTilInt("010010001000010001000005");
-				
+	public void konvertBitStrengTilInt_001000011110011101001111_ShouldBe2221903() {
+		assertThat(MyClass.konvertBitStrengTilInt("001000011110011101001111"),
+				is(2221903));
+
 		PowerMockito.mockStatic(MyClass.class);
-		Mockito.when(MyClass.konvertBitStrengTilInt("010010001000010001000005")).thenReturn(5);
-		assertThat(MyClass.konvertBitStrengTilInt("010010001000010001000005"), equalTo(5));
+		Mockito.when(MyClass.konvertBitStrengTilInt("001000011110011101001111"))
+				.thenReturn(12);
+		assertThat(MyClass.konvertBitStrengTilInt("001000011110011101001111"),
+				equalTo(12));
+	}
+
+	//@Ignore
+	@Test(expected = IllegalArgumentException.class)
+	public void konvertBitStrengTilInt_BitStringWithOtherSignsThan0And1_ShouldBeThrowAnException() {
+		MyClass.konvertBitStrengTilInt("001000011110011101001116");
+	}
+
+	//@Ignore
+	@Test(expected = IllegalArgumentException.class)
+	public void konvertBitStrengTilInt_BitStringWithLessThan24Characters_ShouldBeThrowAnException() {
+		MyClass.konvertBitStrengTilInt("001000011110011101001");
 	}
 
 }
