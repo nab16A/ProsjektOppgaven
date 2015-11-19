@@ -10,6 +10,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(MyClass.class)
 public class MyClassTest {
@@ -107,5 +108,21 @@ public class MyClassTest {
 	public void konvertBitStrengTilInt_BitStringWithLessThan24Characters_ShouldBeThrowAnException() {
 		MyClass.konvertBitStrengTilInt("001000011110011101001");
 	}
-
+	
+	//@Ignore
+	@Test(expected = IllegalArgumentException.class)
+	public void konvertIntTilBitStreng_NegativInt_ShouldBeThrowAnException() {
+		MyClass.konvertIntTilBitStreng(-5);
+	}
+	
+	//@Ignore
+	public void konvertIntTilBitStreng_10_ShouldBe000000000000000000001010() {
+		assertThat(MyClass.konvertIntTilBitStreng(10), is("000000000000000000001010"));
+		
+		PowerMockito.mockStatic(MyClass.class);
+		Mockito.when(MyClass.konvertIntTilBitStreng(-5))
+				.thenReturn("test");
+		assertThat(MyClass.konvertIntTilBitStreng(-5),
+				equalTo("test"));
+	}
 }

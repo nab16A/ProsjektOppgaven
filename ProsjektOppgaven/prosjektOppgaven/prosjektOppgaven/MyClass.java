@@ -1,14 +1,13 @@
 package prosjektOppgaven;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public final class MyClass {
-
+	
 	private static final Map<Character, Integer> myMap;
 	static {
 		myMap = new HashMap<>();
@@ -23,7 +22,26 @@ public final class MyClass {
 	public MyClass() {
 
 	}
-
+	
+	public static String konvertIntTilBitStreng(int tall) {
+		if(tall < 0)
+			throw new IllegalArgumentException("Tallet må være positivt");
+		String s = "";
+		int arrBinary[] = new int[24];
+		int k = 0;
+		while (tall > 0) {
+			arrBinary[k++] = tall % 2;
+			tall = tall / 2;
+		}
+		for (int i = k - 1; i >= 0; i--) {
+			s += String.valueOf(arrBinary[i]);
+		}
+		while (s.length() < 24) {
+			s = "0" + s;
+		}
+		return s;
+	}
+	
 	public static int konvertBitStrengTilInt(String string) {
 		if (string == "")
 			return 0;
@@ -40,10 +58,10 @@ public final class MyClass {
 		String[] strArr = string.split("");
 		int potens = strArr.length - 1;
 
-		return beregnBitStreng(strArr, potens);
+		return beregnBitStrengtilInt(strArr, potens);
 	}
 
-	public static int beregnBitStreng(String[] strArr, int p) {
+	public static int beregnBitStrengtilInt(String[] strArr, int p) {
 		int tall = 0;
 		for (int i = 0; i < strArr.length; i++) {
 			tall += (int) (Integer.valueOf(strArr[i]) * Math.pow(2, p--));
@@ -68,7 +86,6 @@ public final class MyClass {
 		tallList.add(d);
 
 		while (sub != 0) {
-			x = sub;
 			y = y - 1;
 			d = (int) (sub / ((int) Math.pow(16, y)));
 			sub = sub - (d * ((int) Math.pow(16, y)));
