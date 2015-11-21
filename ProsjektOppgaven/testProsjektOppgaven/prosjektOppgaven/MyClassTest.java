@@ -7,6 +7,8 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.tests.utils.impl.StaticConstructorSuppressExtractorImpl;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
@@ -113,6 +115,9 @@ public class MyClassTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void konvertIntTilBitStreng_NegativInt_ShouldBeThrowAnException() {
 		MyClass.konvertIntTilBitStreng(-5);
+		
+		PowerMockito.doThrow(new IllegalArgumentException()).when(MyClass.class);
+		MyClass.konvertIntTilBitStreng(5);
 	}
 	
 	//@Ignore
@@ -120,9 +125,7 @@ public class MyClassTest {
 		assertThat(MyClass.konvertIntTilBitStreng(10), is("000000000000000000001010"));
 		
 		PowerMockito.mockStatic(MyClass.class);
-		Mockito.when(MyClass.konvertIntTilBitStreng(-5))
-				.thenReturn("test");
-		assertThat(MyClass.konvertIntTilBitStreng(-5),
-				equalTo("test"));
+		Mockito.when(MyClass.konvertIntTilBitStreng(-5)).thenReturn("test");
+		assertThat(MyClass.konvertIntTilBitStreng(-5),equalTo("test"));
 	}
 }
