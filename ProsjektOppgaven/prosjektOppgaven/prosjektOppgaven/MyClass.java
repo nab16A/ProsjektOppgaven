@@ -42,20 +42,20 @@ public final class MyClass {
 		return s;
 	}
 	
-	public static int konvertBitStrengTilInt(String string) {
-		if (string == "")
+	public static int konvertBitStrengTilInt(Object object) {
+		if (object == "")
 			return 0;
-		if (string.length() < 24 || string.length() > 24)
+		if (((String) object).length() < 24 || ((String) object).length() > 24)
 			throw new IllegalArgumentException("Bit strengen må ha 24 tegn");
-		if (!string.matches("[0-1]+"))
+		if (!((String) object).matches("[0-1]+"))
 			throw new IllegalArgumentException(
 					"Bit strengen må ha bare 0 eller 1 som tegn");
 
-		return forberedBeregningBitStreng(string);
+		return forberedBeregningBitStreng(object);
 	}
 
-	public static int forberedBeregningBitStreng(String string) {
-		String[] strArr = string.split("");
+	public static int forberedBeregningBitStreng(Object object) {
+		String[] strArr = ((String) object).split("");
 		int potens = strArr.length - 1;
 
 		return beregnBitStrengtilInt(strArr, potens);

@@ -7,22 +7,36 @@ import java.util.List;
 public class OpenAndReadClass {
 	
 	private AboutFile aboutFile;
-	private static final String  FILE = "H:/Dokumenter/H I N/Høst 2015/ITE1901 Programmering 2/"
-			+ "Obligatoriske oppgaver/dataFilen.txt";
-	
+			
 	public OpenAndReadClass(AboutFile aboutFile) {
 		this.aboutFile = aboutFile;
 	}
 	
-	public boolean openMyFile() throws IOException {
-		return aboutFile.openFile(FILE);
+	public boolean openMyFile(String str) throws IOException {
+		return aboutFile.openFile(str);
 	}
 	
 	public List<List<String>> readMyFile(String str) throws Exception {
-		return aboutFile.readFile(FILE);
+		return aboutFile.readFile(str);
 	}
 	
 	public boolean moreData(String str) throws IOException {
-		return aboutFile.isMoreDataToRead(FILE);
+		return aboutFile.isMoreDataToRead(str);
+	}
+	
+	public List<String> calculateTheBitwiseAND_AsString() throws Exception {
+		return aboutFile.calculateBitwiseAND_AsString();
+	}
+	
+	public List<String> calculateTheBitwiseOR_AsString() throws Exception {
+		return aboutFile.calculateBitwiseOR_AsString();
+	}
+	
+	public List<Integer> calculateTheBitewiseAND_AsInt() throws Exception {
+		return aboutFile.calculateBitwiseAND_AsInt();
+	}
+	
+	public List<Integer> calculateTheBitewiseOR_AsInt() throws Exception {
+		return aboutFile.calculateBitwiseAND_AsInt();
 	}
 }
