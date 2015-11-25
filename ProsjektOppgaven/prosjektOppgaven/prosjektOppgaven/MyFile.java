@@ -22,6 +22,11 @@ public class MyFile implements AboutFile {
 	private static List<String> listId;
 	private static List<String> listBinaryData1;
 	private static List<String> listBinaryData2;
+	private static List<String> feilListHex;
+	private static List<String> feilListId;
+	private static List<String> feilListBinary1;
+	private static List<String> feilListBinary2;
+	private static List<List<?>> feilListData;
 	File fila = null;
 	BufferedReader br = null;
 
@@ -42,7 +47,12 @@ public class MyFile implements AboutFile {
 		listId = new ArrayList<>();
 		listBinaryData1 = new ArrayList<>();
 		listBinaryData2 = new ArrayList<>();
-
+		feilListHex = new ArrayList<>();
+		feilListId = new ArrayList<>();
+		feilListBinary1 = new ArrayList<>();
+		feilListBinary2 = new ArrayList<>();
+		feilListData = new ArrayList<>();
+		
 		fila = new File(path);
 		br = new BufferedReader(
 				new InputStreamReader(new FileInputStream(fila)));
@@ -52,11 +62,21 @@ public class MyFile implements AboutFile {
 			String[] tokens = line.split("\\s+");
 			if (tokens.length != 4)
 				throw new Exception();
+			if(!tokens[1].equals("1") && !tokens[1].equals("2")) {
+				feilListHex.add(tokens[0]);
+				feilListId.add(tokens[1]);
+				feilListBinary1.add(tokens[2]);
+				feilListBinary2.add(tokens[3]);
+			}
 			listHex.add(tokens[0]);
 			listId.add(tokens[1]);
 			listBinaryData1.add(tokens[2]);
 			listBinaryData2.add(tokens[3]);
 		}
+		feilListData.add(feilListHex);
+		feilListData.add(feilListId);
+		feilListData.add(feilListBinary1);
+		feilListData.add(feilListBinary2);
 		listData.add(listHex);
 		listData.add(listId);
 		listData.add(listBinaryData1);
@@ -153,20 +173,21 @@ public class MyFile implements AboutFile {
 	}
 
 	@Override
-	public List<List<? extends Object>> dataLagring(String string) throws Exception {
+	public List<List<?>> dataLagring(String string) throws Exception {
 		
-		List<List<? extends Object>> gjenFinneList = new ArrayList<>();
+		readFile(PATH);
+		List<List<?>> gjenFinneList = new ArrayList<>();
 		
-		Map<String, List<List<? extends Object>>> myData = new HashMap<>();
+		Map<String, List<List<?>>> myData = new HashMap<>();
 
 		List<String> bitwiseAndStr = calculateBitwiseAND_AsString();
 		List<String> bitwiseOrStr = calculateBitwiseOR_AsString();
 		List<Integer> bitwiseAndInt = calculateBitwiseAND_AsInt();
 		List<Integer> bitwiseOrInt = calculateBitwiseOR_AsInt();
 
-		List<List<? extends Object>> saveData = new ArrayList<>();
+		List<List<?>> saveData = new ArrayList<>();
 
-		for (int i = 0; i < saveData.size(); i++) {
+		for (int i = 0; i < 1; i++) {
 			saveData.add(bitwiseAndStr);
 			saveData.add(bitwiseOrStr);
 			saveData.add(bitwiseAndInt);
@@ -174,13 +195,25 @@ public class MyFile implements AboutFile {
 			saveData.add(listData);
 		}
 
-		for (int i = 0; i < listData.size(); i++) {
-			myData.put(listData.get(0).get(i), saveData);
+		for (int i = 0; i < listHex.size(); i++) {
+			myData.put(listHex.get(i), saveData);
 		}
 		
 		gjenFinneList = myData.get(string);
 		
 		return gjenFinneList;
+	}
+
+	@Override
+	public Map<String, List<List<?>>> loggeData() throws Exception {
+
+		readFile(PATH);
+		Map<String, List<List<?>>> loggData = new HashMap<>();
+
+		for (int i = 0; i < feilListHex.size(); i++) {
+			loggData.put(feilListHex.get(i), feilListData);
+		}
+		return loggData;
 	}
 
 }

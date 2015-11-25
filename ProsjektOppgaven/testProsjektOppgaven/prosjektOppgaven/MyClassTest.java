@@ -1,5 +1,7 @@
 package prosjektOppgaven;
 
+import java.text.ParseException;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,6 +9,7 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
@@ -30,9 +33,9 @@ public class MyClassTest {
 	public void konverterHexStrengTilInt_HexString03ac0f_ShouldBe240655() {
 		assertThat(MyClass.konverterHexStrengTilInt("03ac0f"), is(240655));
 
-		PowerMockito.mockStatic(MyClass.class);
+		/*PowerMockito.mockStatic(MyClass.class);
 		Mockito.when(MyClass.konverterHexStrengTilInt("a")).thenReturn(12);
-		assertThat(MyClass.konverterHexStrengTilInt("a"), equalTo(12));
+		assertThat(MyClass.konverterHexStrengTilInt("a"), equalTo(12));*/
 	}
 
 	//@Ignore
@@ -63,7 +66,7 @@ public class MyClassTest {
 		MyClass.konverterHexStrengTilInt("03a5d1e");
 		MyClass.konverterHexStrengTilInt("03a5d");
 	}
-
+	
 	//@Ignore
 	@Test
 	public void konvertIntTilHexStreng_32993_ShouldBe80E1() {
@@ -76,7 +79,7 @@ public class MyClassTest {
 
 	//@Ignore
 	@Test
-	public void konvertBitStrengTilInt_empty_ShouldBe0() {
+	public void konvertBitStrengTilInt_empty_ShouldBe0() throws ParseException {
 		assertThat(MyClass.konvertBitStrengTilInt(""), is(0));
 
 		PowerMockito.mockStatic(MyClass.class);
@@ -86,7 +89,7 @@ public class MyClassTest {
 
 	//@Ignore
 	@Test
-	public void konvertBitStrengTilInt_001000011110011101001111_ShouldBe2221903() {
+	public void konvertBitStrengTilInt_001000011110011101001111_ShouldBe2221903() throws ParseException {
 		assertThat(MyClass.konvertBitStrengTilInt("001000011110011101001111"),
 				is(2221903));
 
@@ -99,13 +102,13 @@ public class MyClassTest {
 
 	//@Ignore
 	@Test(expected = IllegalArgumentException.class)
-	public void konvertBitStrengTilInt_BitStringWithOtherSignsThan0And1_ShouldBeThrowAnException() {
+	public void konvertBitStrengTilInt_BitStringWithOtherSignsThan0And1_ShouldBeThrowAnException() throws ParseException {
 		MyClass.konvertBitStrengTilInt("001000011110011101001116");
 	}
 
 	//@Ignore
 	@Test(expected = IllegalArgumentException.class)
-	public void konvertBitStrengTilInt_BitStringWithLessThan24Characters_ShouldBeThrowAnException() {
+	public void konvertBitStrengTilInt_BitStringWithLessThan24Characters_ShouldBeThrowAnException() throws ParseException {
 		MyClass.konvertBitStrengTilInt("001000011110011101001");
 	}
 	

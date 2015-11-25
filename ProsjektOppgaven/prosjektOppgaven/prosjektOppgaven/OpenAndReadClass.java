@@ -2,6 +2,7 @@ package prosjektOppgaven;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
  
 public class OpenAndReadClass {
@@ -38,5 +39,13 @@ public class OpenAndReadClass {
 	
 	public List<Integer> calculateTheBitewiseOR_AsInt() throws Exception {
 		return aboutFile.calculateBitwiseAND_AsInt();
+	}
+	
+	public List<List<?>> myDataLagring(String str) throws Exception {
+		return aboutFile.dataLagring(str);
+	}
+	
+	public Map<String, List<List<?>>> myLoggeData() throws Exception {
+		return aboutFile.loggeData();
 	}
 }

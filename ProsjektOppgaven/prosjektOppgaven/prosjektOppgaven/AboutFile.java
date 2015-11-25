@@ -1,7 +1,10 @@
 package prosjektOppgaven;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface AboutFile {
 	
@@ -19,10 +22,7 @@ public interface AboutFile {
 	
 	List<Integer> calculateBitwiseOR_AsInt() throws Exception;
 	
-	List<List<? extends Object>> dataLagring(String string) throws Exception;
+	List<List<?>> dataLagring(String string) throws Exception;
 	
-	 
-	
-	
-
+	public Map<String, List<List<?>>> loggeData() throws Exception;
 }

@@ -1,5 +1,7 @@
 package prosjektOppgaven;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +35,9 @@ public final class MyClass {
 			arrBinary[k++] = tall % 2;
 			tall = tall / 2;
 		}
+		StringBuilder sb = new StringBuilder();
 		for (int i = k - 1; i >= 0; i--) {
-			s += String.valueOf(arrBinary[i]);
+			s += sb.append(arrBinary[i]).toString();
 		}
 		while (s.length() < 24) {
 			s = "0" + s;
@@ -42,7 +45,7 @@ public final class MyClass {
 		return s;
 	}
 	
-	public static int konvertBitStrengTilInt(Object object) {
+	public static int konvertBitStrengTilInt(Object object) throws ParseException {
 		if (object == "")
 			return 0;
 		if (((String) object).length() < 24 || ((String) object).length() > 24)
@@ -54,60 +57,34 @@ public final class MyClass {
 		return forberedBeregningBitStreng(object);
 	}
 
-	public static int forberedBeregningBitStreng(Object object) {
+	public static int forberedBeregningBitStreng(Object object) throws ParseException {
+		
 		String[] strArr = ((String) object).split("");
 		int potens = strArr.length - 1;
 
 		return beregnBitStrengtilInt(strArr, potens);
 	}
 
-	public static int beregnBitStrengtilInt(String[] strArr, int p) {
+	public static int beregnBitStrengtilInt(String[] strArr, int p) throws ParseException {
+		DecimalFormat df = new DecimalFormat();
 		int tall = 0;
 		for (int i = 0; i < strArr.length; i++) {
-			tall += (int) (Integer.valueOf(strArr[i]) * Math.pow(2, p--));
+			tall += (df.parse(strArr[i]).intValue()) * Math.pow(2, p--);
 		}
 		return tall;
 	}
 
 	public static String konvertIntTilHexStreng(int x) {
 		String s = "";
-		int y = 0;
-
-		String[] strArr = String.valueOf(x).split("");
-		int n = strArr.length;
-
-		if ((Math.pow(16, (n - 1)) > (double) x))
-			y = n - 2;
-		y = n - 1;
-
-		ArrayList<Integer> tallList = new ArrayList<>();
-		int d = (int) (x / ((int) Math.pow(16, y)));
-		int sub = x - (d * ((int) Math.pow(16, y)));
-		tallList.add(d);
-
-		while (sub != 0) {
-			y = y - 1;
-			d = (int) (sub / ((int) Math.pow(16, y)));
-			sub = sub - (d * ((int) Math.pow(16, y)));
-			tallList.add(d);
+		int mod;
+		char hexArr[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+				'A', 'B', 'C', 'D', 'E', 'F' };
+		while (x > 0) {
+			mod = x % 16;
+			s = hexArr[mod] + s;
+			x = x / 16;
 		}
-		ArrayList<String> strList = new ArrayList<>();
-		for (int i = 0; i < tallList.size(); i++) {
-			if (tallList.get(i).compareTo(9) == -1
-					|| tallList.get(i).compareTo(9) == 0)
-				strList.add(String.valueOf(tallList.get(i)));
-			for (Entry<Character, Integer> entry : myMap.entrySet()) {
-				if (entry.getValue().equals(tallList.get(i)))
-					strList.add(Character.toString(entry.getKey()));
-			}
-		}
-		for (String string : strList) {
-			s += string;
-		}
-		if (s.charAt(0) == '0' && s.charAt(1) == '0')
-			return s.toUpperCase().substring(2);
-
-		return s.toUpperCase().substring(1);
+		return s.toUpperCase();
 	}
 
 	public static int konverterHexStrengTilInt(String string) {
