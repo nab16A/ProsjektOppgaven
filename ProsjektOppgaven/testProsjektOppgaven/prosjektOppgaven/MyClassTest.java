@@ -33,9 +33,9 @@ public class MyClassTest {
 	public void konverterHexStrengTilInt_HexString03ac0f_ShouldBe240655() {
 		assertThat(MyClass.konverterHexStrengTilInt("03ac0f"), is(240655));
 
-		/*PowerMockito.mockStatic(MyClass.class);
+		PowerMockito.mockStatic(MyClass.class);
 		Mockito.when(MyClass.konverterHexStrengTilInt("a")).thenReturn(12);
-		assertThat(MyClass.konverterHexStrengTilInt("a"), equalTo(12));*/
+		assertThat(MyClass.konverterHexStrengTilInt("a"), equalTo(12));
 	}
 
 	//@Ignore

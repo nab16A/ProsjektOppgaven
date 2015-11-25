@@ -76,12 +76,12 @@ public final class MyClass {
 
 	public static String konvertIntTilHexStreng(int x) {
 		String s = "";
-		int mod;
+		int modulo;
 		char hexArr[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 				'A', 'B', 'C', 'D', 'E', 'F' };
 		while (x > 0) {
-			mod = x % 16;
-			s = hexArr[mod] + s;
+			modulo = x % 16;
+			s = hexArr[modulo] + s;
 			x = x / 16;
 		}
 		return s.toUpperCase();
